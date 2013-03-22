@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	public Object o1, o2;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
-		boolean bool = true;
-		return bool;
-		
-		
-		
-		////////////
+		return true;
 	}
 
 	// Route called when the user presses "connect"
@@ -286,13 +282,14 @@ public class MainActivity extends Activity {
 							public void run() {
 								EditText et = (EditText) findViewById(R.id.RecvdMessage);
 								
-								/*
+								synchronized(o2) {
 								et.setText(s); // Crashing the app for some reason
 
 								TCPReadTimerTask tcp_task = new TCPReadTimerTask();
 								Timer tcp_timer = new Timer();
 								tcp_timer.schedule(tcp_task, 3000, 1000);
-								*/
+								}
+								
 							}
 						});
 						
