@@ -99,8 +99,7 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	}
 	
 	public void prevPage(View view) {	
-		Intent myIntent = new Intent(view.getContext(), MainActivity.class);  
-		startActivityForResult(myIntent, 0);
+		onBackPressed();
 	}
 	
 	public void nextPage(View view) {	

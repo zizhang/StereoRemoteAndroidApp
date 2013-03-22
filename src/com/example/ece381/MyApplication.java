@@ -19,6 +19,7 @@ public class MyApplication extends Application {
 	private int playListPosition;
 	boolean newSongSelected;
 	Integer currentVolume;
+	private String readBuffer;
 	
 	public MyApplication() {
 		songList = new ArrayList<Song>();
