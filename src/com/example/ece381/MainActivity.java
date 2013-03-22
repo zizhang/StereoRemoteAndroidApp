@@ -49,12 +49,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
-		boolean bool = true;
-		return bool;
-		
-		
-		
-		////////////
+		return true;
 	}
 
 	// Route called when the user presses "connect"
