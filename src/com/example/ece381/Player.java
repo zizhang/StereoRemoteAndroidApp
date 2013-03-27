@@ -126,6 +126,9 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 		case R.id.shuffle_button:
 			app.setCommand("7");
 			break;
+		case R.id.sync_button:
+			app.setCommand("sync");
+			break;
 		}
 		
 		sendMessage();

@@ -32,15 +32,6 @@
             android:onClick="nextPage"
             android:text="@string/forward_button" />
 
-        <SeekBar
-            android:id="@+id/player_volume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/back"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="97dp"
-            android:onClick="onProgressChanged" />
-
         <EditText
             android:id="@+id/volume_level"
             android:layout_width="wrap_content"
@@ -49,17 +40,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="34dp"
             android:ems="10" />
-
-        <TextView
-            android:id="@+id/TextView01"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/back"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="17dp"
-            android:textColor="@color/white"
-            android:gravity="left"
-            android:text="@string/volumelevelDisplay" />
 
         <Button
             android:id="@+id/pause"
@@ -106,6 +86,34 @@
             android:layout_marginTop="31dp"
             android:onClick="onClick"
             android:text="@string/play" />
+
+        <Button
+            android:id="@+id/sync_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/shuffle_button"
+            android:layout_alignParentBottom="true"
+            android:onClick="onClick"
+            android:text="@string/sync" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/volume_level"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:text="@string/volumelevelDisplay"
+            android:textColor="@color/white" />
+
+        <SeekBar
+            android:id="@+id/player_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/TextView01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="17dp"
+            android:onClick="onProgressChanged" />
 
     </RelativeLayout>
 

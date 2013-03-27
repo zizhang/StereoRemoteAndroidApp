@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		
 		TCPReadTimerTask tcp_task = new TCPReadTimerTask();
 		Timer tcp_timer = new Timer();
-		tcp_timer.schedule(tcp_task, 3000, 1000);
+		tcp_timer.schedule(tcp_task, 3000, 500);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
 
 	//  Called when the user wants to send a message
 	
-	public void sendMessage(View view) {
+	public synchronized void sendMessage(View view) {
 		MyApplication app = (MyApplication) getApplication();
 		//GlobalStore gs = new GlobalStore();
 		//GlobalStore gs = (GlobalStore) getApplication();
@@ -124,14 +124,13 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	public synchronized void sendMessage() {
+	public void sendMessage() {
 		MyApplication app = (MyApplication) getApplication();
 		//GlobalStore gs = new GlobalStore();
 		//GlobalStore gs = (GlobalStore) getApplication();
 		
 		// Get the message from the box
-		String msg;
-		
+		String msg = "";
 		
 		if(app.getCommand().equals("1")) { // Send play command 
 			if(app.getSongSelectedFlag()) {
@@ -142,9 +141,17 @@ public class MainActivity extends Activity {
 			}
 		} else if(app.getCommand().equals("5")) { // Send volume change command
 			msg = "" + app.getCommand() + (app.getVolume()).toString();
+		} else if(app.getCommand().equals("sync")) { // Send sync to get playlists
+			msg = "8";
+			app.setCommand(null);
+		} else if(app.getCommand().equals("confirm")) {
+			msg = "confirm";
+			app.setCommand("");
 		} else {
 			msg = "" + app.getCommand();
 		}
+		
+		app.setCommand("");
 		
 		//EditText et = (EditText) findViewById(R.id.MessageText);
 		//String msg = et.getText().toString();
@@ -254,7 +261,7 @@ public class MainActivity extends Activity {
 	// on Timer Tasks before trying to understand this code.
 	
 	public class TCPReadTimerTask extends TimerTask {
-		public synchronized void run() {
+		public void run() {
 			
 			MyApplication app = (MyApplication) getApplication();
 			if (app.sock != null && app.sock.isConnected()
@@ -274,9 +281,53 @@ public class MainActivity extends Activity {
 					
 						final String s = new String(buf, 0, bytes_avail, "US-ASCII");
 					
-						Log.d("Msg Received:", s);
+						//Log.d("Msg Received:", s);
+						
+						String msgReceived = s.substring(1);
+						
+						Log.d("Msg Received:", msgReceived);
+						
+						// ------ Sync Playlists --- //
+						String[] delimStrings;
+						
+						if(app.getCommand().equals("sync")) {
+							app.setSyncStatus(true);
+							app.clearPlaylists();
+						} else if(msgReceived.contains(".LST")) { // DE2 Sends playlist name
+							app.setTempPlaylist(msgReceived);
+							app.setCommand("confirm");
+							sendMessage();
+						} else if(msgReceived.contains("/")) {
+							delimStrings = msgReceived.split("/");
+							
+							Song newSong = new Song(delimStrings[0], delimStrings[1], delimStrings[2]);
+							
+							app.addTempSong(newSong);
+							app.setCommand("confirm");
+							sendMessage();
+						} else if(msgReceived.contains("pdone")) {
+							app.addTempPlaylist();
+							app.setTempPlaylist(null);
+							app.setCommand("confirm");
+							sendMessage();
+						} else if(msgReceived.contains("syncdone")) {
+							app.setSyncStatus(false);
+						}
+						
+						// ----------------------------//
+						
+						// ----- Sync Currently Playing --- //
+						if(msgReceived.startsWith("1")) {
+							int pos = app.findSong(msgReceived.substring(1));
+							if(pos != -1) {
+								app.setPos(pos);
+							}
+						}
+						
+						// -------------------------------- //
 					
-		
+						// We don't need to update the GUI with bytes received
+						
 						// As explained in the tutorials, the GUI can not be
 						// updated in an asyncrhonous task.  So, update the GUI
 						// using the UI thread.

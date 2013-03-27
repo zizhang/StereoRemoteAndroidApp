@@ -20,26 +20,30 @@ public class MyApplication extends Application {
 	boolean newSongSelected;
 	Integer currentVolume;
 	private String readBuffer;
+	private Playlist tempPlaylist;
+	private boolean syncing;
 	
 	public MyApplication() {
 		songList = new ArrayList<Song>();
 		playlists = new ArrayList<Playlist>(); 
 		
+		listPosition = 0;
+		playListPosition = 0;
+		fileName = "";
+		//fileName = songList.get(listPosition).getSongName();
+		
+		command = "1";
+		newSongSelected = false;
+		syncing = false;
+		currentVolume = 5;
+		
+		/*
 		songList.add(new Song("SONG4.WAV", "Call Me Maybe", "Carly Rae Jepsen"));
 		songList.add(new Song("SONG5.WAV", "Unknown Title", "Unknown Artist"));
 		songList.add(new Song("SONG1.WAV", "Harlem Shake", "Miami Heat"));
 		songList.add(new Song("SONG3.WAV", "NHL Theme", "TSN"));
 		songList.add(new Song("SONG2.WAV", "PoH", "Kid Cudi"));
 		songList.add(new Song("SONG6.WAV", "Nyan Cat", "Unknown Artist"));
-  
-		listPosition = 0;
-		playListPosition = 0;
-		fileName = songList.get(listPosition).getSongName();
-		
-		command = "1";
-		newSongSelected = false;
-		
-		currentVolume = 5;
 		
 		playlistA = new Playlist("DEMO1.LST");
 		playlistB = new Playlist("DEMO2.LST");
@@ -62,7 +66,7 @@ public class MyApplication extends Application {
 		
 		playlists.add(allSongs);
 		playlists.add(playlistA);
-		playlists.add(playlistB);
+		playlists.add(playlistB); */
 	}
 	
 	public Integer getVolume() {
@@ -88,6 +92,18 @@ public class MyApplication extends Application {
 	public void setPos(int pos) {
 		listPosition = pos;
 		fileName = (playlists.get(playListPosition)).getPlaylist().get(listPosition).getSongName();
+	}
+	
+	public int findSong(String songFileName) {
+		int pos;
+		List<Song> songs = (playlists.get(playListPosition)).getPlaylist();
+		for(pos = 0; pos < songs.size(); pos++) {
+			if(songs.get(pos).getSongName().equals(songFileName)) {
+				return pos;
+			}
+		}
+		
+		return -1;
 	}
 	
 	public Song getCurrentSong() {
@@ -124,5 +140,37 @@ public class MyApplication extends Application {
 	
 	public boolean getSongSelectedFlag() {
 		return newSongSelected;
+	}
+	
+	public void addPlaylist(Playlist newPlaylist) {
+		playlists.add(newPlaylist);
+	}
+	
+	public void setTempPlaylist(String playlistName) {
+		if(playlistName == null) {
+			tempPlaylist = null;
+		} else {
+			tempPlaylist = new Playlist(playlistName);
+		}
+	}
+	
+	public void addTempPlaylist() {
+		playlists.add(tempPlaylist);
+	}
+	
+	public void addTempSong(Song newSong) {
+		tempPlaylist.addSong(newSong);
+	}
+	
+	public boolean getSyncStatus() {
+		return syncing;
+	}
+	
+	public void setSyncStatus(boolean status) {
+		syncing = status;
+	}
+	
+	public void clearPlaylists() {
+		playlists = new ArrayList<Playlist>(); 
 	}
 }

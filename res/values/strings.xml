@@ -14,6 +14,7 @@
     <string name="pause">Pause</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
+    <string name="sync">Sync</string>
     <string name="volumelevelDisplay">Volume level</string>
     <string name="current">Currently Playing</string>
     <string name="refresh_socket">Show Sock.</string>
