@@ -12,14 +12,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity implements SwipeInterface{
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -37,14 +37,20 @@ public class MainActivity extends Activity {
 		et.setKeyListener(null);
 		et = (EditText) findViewById(R.id.error_message_box);
 		et.setKeyListener(null);
-
+		
+		
+		//Gesture implementation for swiping 
+		Gesture activitySwipeDetector = new Gesture(this);
+		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.mainView);
+		lowestLayout.setOnTouchListener(activitySwipeDetector);
+		
 		// Set up a timer task.  We will use the timer to check the
 		// input queue every 500 ms
-		
 		TCPReadTimerTask tcp_task = new TCPReadTimerTask();
 		Timer tcp_timer = new Timer();
 		tcp_timer.schedule(tcp_task, 3000, 1000);
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,6 +84,68 @@ public class MainActivity extends Activity {
 		Intent myIntent = new Intent(view.getContext(), Player.class);  
 		startActivityForResult(myIntent, 0);
 	}
+	
+	// left swipe implementation
+	///////////////TO-DO************************
+	@Override
+	public void RightToLeft(View v) {
+	    switch(v.getId()){
+	        case R.id.mainView:
+	        	Intent myIntent0 = new Intent(v.getContext(), Player.class);  
+	    		startActivity(myIntent0);
+	    		break;
+	        case R.id.playerView:
+	        	Intent myIntent1 = new Intent(v.getContext(), PlaylistActivity.class);  
+	    		startActivity(myIntent1);
+	    		break;
+	        case R.id.playListView:
+	        	Intent myIntent2 = new Intent(v.getContext(), SongList.class);  
+	    		startActivity(myIntent2);
+	    		break;
+	        case R.id.songListView:
+	        	Intent myIntent3 = new Intent(v.getContext(), MainActivity.class);  
+	    		startActivity(myIntent3);
+	    		break;
+	    }       
+	}
+
+	@Override
+	public void LeftToRight(View v) {
+		switch(v.getId()){
+        case R.id.mainView:
+        	Intent myIntent0 = new Intent(v.getContext(), SongList.class);  
+    		startActivity(myIntent0);
+    		break;
+        case R.id.playerView:
+        	Intent myIntent1 = new Intent(v.getContext(), MainActivity.class);  
+    		startActivity(myIntent1);
+    		break;
+        case R.id.playListView:
+        	Intent myIntent2 = new Intent(v.getContext(), Player.class);  
+    		startActivity(myIntent2);
+    		break;
+        case R.id.songListView:
+        	Intent myIntent3 = new Intent(v.getContext(), PlaylistActivity.class);  
+    		startActivity(myIntent3);
+    		break;
+		}       
+		
+	}
+
+
+	@Override
+	public void BottomToTop(View view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void TopToBottom(View view) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	//  Called when the user wants to send a message
 	
@@ -87,7 +155,7 @@ public class MainActivity extends Activity {
 		//GlobalStore gs = (GlobalStore) getApplication();
 		
 		// Get the message from the box
-/*		String msg;
+		String msg;
 		
 		if(app.getCommand().equals("1")) { // Send play command
 			msg = app.getCommand() + app.getFileName();
@@ -96,9 +164,9 @@ public class MainActivity extends Activity {
 		} else {
 			msg = "" + app.getCommand();
 		}
-*/		
+		
 		EditText et = (EditText) findViewById(R.id.MessageText);
-		String msg = et.getText().toString();
+		//String msg = et.getText().toString();
 
 		// Create an array of bytes.  First byte will be the
 		// message length, and the next ones will be the message
@@ -124,7 +192,9 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	public synchronized void sendMessage() {
+	
+	//OVERLOADED! the current one we use
+	public void sendMessage() {
 		MyApplication app = (MyApplication) getApplication();
 		//GlobalStore gs = new GlobalStore();
 		//GlobalStore gs = (GlobalStore) getApplication();
@@ -146,7 +216,7 @@ public class MainActivity extends Activity {
 			msg = "" + app.getCommand();
 		}
 		
-		//EditText et = (EditText) findViewById(R.id.MessageText);
+		EditText et = (EditText) findViewById(R.id.MessageText);
 		//String msg = et.getText().toString();
 
 		// Create an array of bytes.  First byte will be the
@@ -184,7 +254,7 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-
+	
 	// Construct an IP address from the four boxes
 	
 	public String getConnectToIP() {
@@ -254,8 +324,7 @@ public class MainActivity extends Activity {
 	// on Timer Tasks before trying to understand this code.
 	
 	public class TCPReadTimerTask extends TimerTask {
-		public synchronized void run() {
-			
+		public void run() {
 			MyApplication app = (MyApplication) getApplication();
 			if (app.sock != null && app.sock.isConnected()
 					&& !app.sock.isClosed()) {
@@ -271,37 +340,30 @@ public class MainActivity extends Activity {
 						
 						byte buf[] = new byte[bytes_avail];
 						in.read(buf);
-					
+
 						final String s = new String(buf, 0, bytes_avail, "US-ASCII");
-					
-						Log.d("Msg Received:", s);
-					
 		
 						// As explained in the tutorials, the GUI can not be
 						// updated in an asyncrhonous task.  So, update the GUI
 						// using the UI thread.
-						/*
+						
 						runOnUiThread(new Runnable() {
 							public void run() {
 								EditText et = (EditText) findViewById(R.id.RecvdMessage);
 								
-								et.setText(s); // Crashing the app for some reason
-
-								TCPReadTimerTask tcp_task = new TCPReadTimerTask();
-								Timer tcp_timer = new Timer();
-								tcp_timer.schedule(tcp_task, 3000, 1000);
-								
+								/*
+								et.setText(s); // Crashing the app b/c trying to update GUI
+								*/
 							}
 						});
-						*/
+						
 					}
-				
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		
-		
+			
 		}
 	}
 }
+	

@@ -2,13 +2,13 @@ package com.example.ece381;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class SongList extends MainActivity { 
@@ -47,6 +47,11 @@ public class SongList extends MainActivity {
 				Intent myIntent = new Intent(view.getContext(), Player.class);  
 				startActivityForResult(myIntent, 0);
 			}});
+	      
+	    //Gesture implementation for swiping 
+			Gesture activitySwipeDetector = new Gesture(this);
+			LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.songListView);
+			lowestLayout.setOnTouchListener(activitySwipeDetector);
 	}  
 	
 	private boolean pauseHasRun = false;

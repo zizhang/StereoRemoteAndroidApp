@@ -1,9 +1,9 @@
 package com.example.ece381;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -54,6 +54,12 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 				txt1.setText(app.getVolume().toString());
 			}
 		});
+	      
+	    //Gesture implementation for swiping 
+			Gesture activitySwipeDetector = new Gesture(this);
+			LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playerView);
+			lowestLayout.setOnTouchListener(activitySwipeDetector);
+			
 	}  
 	
 	private boolean pauseHasRun = false;
@@ -99,7 +105,8 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	}
 	
 	public void prevPage(View view) {	
-		onBackPressed();
+		Intent myIntent = new Intent(view.getContext(), MainActivity.class);  
+		startActivityForResult(myIntent, 0);
 	}
 	
 	public void nextPage(View view) {	
