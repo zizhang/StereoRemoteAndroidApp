@@ -70,6 +70,9 @@ public class MainActivity extends Activity {
 		// and executes the code in it.
 		
 		new SocketConnect().execute((Void) null);
+		
+		Intent myIntent = new Intent(view.getContext(), Player.class);  
+		startActivity(myIntent);
 	}
 	
 	// Goto Player page
@@ -139,15 +142,21 @@ public class MainActivity extends Activity {
 			} else {
 				msg = app.getCommand();
 			}
+		} else if(app.getCommand().equals("6")) {
+			msg = "" + app.getCommand() + (app.getBalance()).toString();
 		} else if(app.getCommand().equals("5")) { // Send volume change command
 			msg = "" + app.getCommand() + (app.getVolume()).toString();
 		} else if(app.getCommand().equals("sync")) { // Send sync to get playlists
 			msg = "8";
+			app.setSyncStatus(true);
+			app.clearPlaylists();
 			app.setCommand(null);
 		} else if(app.getCommand().equals("confirm")) {
 			msg = "confirm";
 			app.setCommand("");
-		} else {
+		} else if(app.getCommand() == null) {
+			return;
+		}else {
 			msg = "" + app.getCommand();
 		}
 		
@@ -290,28 +299,27 @@ public class MainActivity extends Activity {
 						// ------ Sync Playlists --- //
 						String[] delimStrings;
 						
-						if(app.getCommand().equals("sync")) {
-							app.setSyncStatus(true);
-							app.clearPlaylists();
-						} else if(msgReceived.contains(".LST")) { // DE2 Sends playlist name
-							app.setTempPlaylist(msgReceived);
-							app.setCommand("confirm");
-							sendMessage();
-						} else if(msgReceived.contains("/")) {
-							delimStrings = msgReceived.split("/");
-							
-							Song newSong = new Song(delimStrings[0], delimStrings[1], delimStrings[2]);
-							
-							app.addTempSong(newSong);
-							app.setCommand("confirm");
-							sendMessage();
-						} else if(msgReceived.contains("pdone")) {
-							app.addTempPlaylist();
-							app.setTempPlaylist(null);
-							app.setCommand("confirm");
-							sendMessage();
-						} else if(msgReceived.contains("syncdone")) {
-							app.setSyncStatus(false);
+						if(app.getSyncStatus()) {
+							if(msgReceived.contains(".LST")) { // DE2 Sends playlist name
+								app.setTempPlaylist(msgReceived);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("/")) {
+								delimStrings = msgReceived.split("/");
+								
+								Song newSong = new Song(delimStrings[0], delimStrings[1], delimStrings[2]);
+								
+								app.addTempSong(newSong);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("pdone")) {
+								app.addTempPlaylist();
+								app.setTempPlaylist(null);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("syncdone")) {
+								app.setSyncStatus(false);
+							}
 						}
 						
 						// ----------------------------//

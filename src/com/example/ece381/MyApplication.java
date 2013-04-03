@@ -17,15 +17,19 @@ public class MyApplication extends Application {
 	private Playlist allSongs;
 	private List<Playlist> playlists;
 	private int playListPosition;
+	private List<Song> masterSongList;
 	boolean newSongSelected;
 	Integer currentVolume;
 	private String readBuffer;
 	private Playlist tempPlaylist;
 	private boolean syncing;
+	private Integer balance;
+	private boolean syncNewPlaylist;
 	
 	public MyApplication() {
 		songList = new ArrayList<Song>();
 		playlists = new ArrayList<Playlist>(); 
+		masterSongList = new ArrayList<Song>();
 		
 		listPosition = 0;
 		playListPosition = 0;
@@ -35,7 +39,9 @@ public class MyApplication extends Application {
 		command = "1";
 		newSongSelected = false;
 		syncing = false;
-		currentVolume = 5;
+		syncNewPlaylist = false;
+		currentVolume = 3;
+		balance = 5;
 		
 		/*
 		songList.add(new Song("SONG4.WAV", "Call Me Maybe", "Carly Rae Jepsen"));
@@ -122,6 +128,11 @@ public class MyApplication extends Application {
 		return songList;
 	}
 	
+	public List<Song> getMasterSongList() {
+		masterSongList = playlists.get(0).getPlaylist();
+		return masterSongList;
+	}
+	
 	public List<Playlist> getPlayList() {
 		return playlists;
 	}
@@ -154,6 +165,10 @@ public class MyApplication extends Application {
 		}
 	}
 	
+	public void addNewPlaylist(Playlist newPlaylist) {
+		playlists.add(newPlaylist);
+	}
+	
 	public void addTempPlaylist() {
 		playlists.add(tempPlaylist);
 	}
@@ -172,5 +187,31 @@ public class MyApplication extends Application {
 	
 	public void clearPlaylists() {
 		playlists = new ArrayList<Playlist>(); 
+	}
+	
+	public Integer getBalance() {
+		return balance;
+	}
+	
+	public void setBalance(Integer newBalance) {
+		balance = newBalance;
+	}
+	
+	public boolean getSyncNewPlaylistStatus() {
+		return syncNewPlaylist;
+	}
+	
+	public void setSyncNewPlaylistStatus(boolean status) {
+		syncNewPlaylist = status;
+	}
+	
+	public boolean findPlaylist(String name) {
+		for(int i = 0; i < playlists.size(); i++) {
+			if(playlists.get(i).getName().equals(name)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

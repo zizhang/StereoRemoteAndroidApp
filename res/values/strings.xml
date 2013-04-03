@@ -25,6 +25,8 @@
     <string name="back_button">Back</string>
     <string name="songlist_heading">Songs</string>
     <string name="playlist_heading">Playlists</string>
+    <string name="create_playlist_name">New Playlist Name</string>
+    <string name="create_playlist">Create Playlist</string>
     <string name="shuffle">Shuffle</string>
     <string name="send_playlist">Send Playlist</string>
 

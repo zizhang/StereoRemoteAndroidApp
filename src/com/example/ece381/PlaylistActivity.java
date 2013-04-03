@@ -75,7 +75,7 @@ public class PlaylistActivity extends MainActivity {
 	}
 	
 	public void nextPage(View view) {	
-		Intent myIntent = new Intent(view.getContext(), SongList.class);   //// 
+		Intent myIntent = new Intent(view.getContext(), CreatePlaylistActivity.class);  
 		startActivityForResult(myIntent, 0);
 	}
 }

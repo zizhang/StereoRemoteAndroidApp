@@ -107,12 +107,21 @@
             android:textColor="@color/white" />
 
         <SeekBar
+            android:id="@+id/balancer"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:onClick="onProgressChanged" />
+
+        <SeekBar
             android:id="@+id/player_volume"
-            android:layout_width="match_parent"
+            android:progressDrawable="@color/blue"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/TextView01"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="17dp"
+            android:layout_alignLeft="@+id/balancer"
+            android:layout_marginBottom="15dp"
             android:onClick="onProgressChanged" />
 
     </RelativeLayout>
