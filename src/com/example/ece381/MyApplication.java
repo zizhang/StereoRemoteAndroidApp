@@ -18,6 +18,7 @@ public class MyApplication extends Application {
 	private List<Playlist> playlists;
 	private int playListPosition;
 	boolean newSongSelected;
+	boolean swipeFlag;
 	Integer currentVolume;
 	private String readBuffer;
 	
@@ -38,6 +39,10 @@ public class MyApplication extends Application {
 		
 		command = "1";
 		newSongSelected = false;
+		
+		///
+		swipeFlag = true;
+		///
 		
 		currentVolume = 5;
 		
@@ -124,5 +129,14 @@ public class MyApplication extends Application {
 	
 	public boolean getSongSelectedFlag() {
 		return newSongSelected;
+	}
+	
+
+	public void setSwipeFlag(boolean flag) {
+		swipeFlag = flag;
+	}
+	
+	public boolean getSwipeFlag() {
+		return swipeFlag;
 	}
 }

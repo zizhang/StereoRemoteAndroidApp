@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements SwipeInterface{
 	    }       
 	}
 
-	@Override
+	//@Override
 	public void LeftToRight(View v) {
 		switch(v.getId()){
         case R.id.mainView:
@@ -364,6 +364,17 @@ public class MainActivity extends Activity implements SwipeInterface{
 			}
 			
 		}
+	}
+
+	public void LeftToRight() {
+		Intent myIntent0 = new Intent(getBaseContext(), PlaylistActivity.class);  
+		startActivity(myIntent0);
+	}
+
+
+	public void RightToLeft() {
+		Intent myIntent0 = new Intent(getBaseContext(), Player.class);  
+		startActivity(myIntent0);
 	}
 }
 	

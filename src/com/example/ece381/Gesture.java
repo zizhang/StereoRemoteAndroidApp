@@ -9,8 +9,9 @@ public class Gesture implements View.OnTouchListener {
 
 	static final String logTag = "ActivitySwipeDetector";
 	private Activity activity;
-	static final int MIN_DISTANCE = 50;
+	static final int MIN_DISTANCE = 10;
 	private float downX, downY, upX, upY;
+    boolean flag;
 	
 	public Gesture(){}
 	
@@ -20,16 +21,17 @@ public class Gesture implements View.OnTouchListener {
 	
 	///************************************************
 	//TO-DO
-	public void onRightToLeftSwipe(){
-	    Log.i(logTag, "RightToLeftSwipe!");
-	    ///activity.RightToLeft(view);
+	public void onRightToLeftSwipeM(){
+	    Log.i(logTag, "RightToLeftSwipe! on MainActivity");
+	    ((MainActivity)activity).RightToLeft();
 	}
 	
 	//TO-DO
-	public void onLeftToRightSwipe(){
-	    Log.i(logTag, "LeftToRightSwipe!");
-	    //activity.LeftToRight();
+	public void onLeftToRightSwipeM(){
+	    Log.i(logTag, "LeftToRightSwipe! on MainActivity");
+	     ((MainActivity)activity).LeftToRight();
 	}
+	
 	
 	public void onTopToBottomSwipe(){
 	    Log.i(logTag, "onTopToBottomSwipe!");
@@ -42,6 +44,8 @@ public class Gesture implements View.OnTouchListener {
 	}
 	
 	public boolean onTouch(View v, MotionEvent event) {
+		flag = true;
+		
 	    switch(event.getAction()){
 	        case MotionEvent.ACTION_DOWN: {
 	            downX = event.getX();
@@ -58,8 +62,19 @@ public class Gesture implements View.OnTouchListener {
 	            // swipe horizontal?
 	            if(Math.abs(deltaX) > MIN_DISTANCE){
 	                // left or right
-	                if(deltaX < 0) { this.onLeftToRightSwipe(); return true; }
-	                if(deltaX > 0) { this.onRightToLeftSwipe(); return true; }
+	                if(deltaX < 0) {
+	                	
+		                	this.onLeftToRightSwipeM();
+		                	return true;
+	                	
+	                }
+	           
+	                if(deltaX > 0) {
+	  
+		                	this.onLeftToRightSwipeM();
+		                	return true;
+	                	
+	                }
 	            }
 	            else {
 	                    Log.i(logTag, "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE);
@@ -80,6 +95,7 @@ public class Gesture implements View.OnTouchListener {
 	            return true;
 	        }
 	    }
+	    flag = false;
 	    return false;
 	}
 
