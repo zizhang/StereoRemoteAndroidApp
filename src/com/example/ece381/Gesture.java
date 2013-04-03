@@ -43,7 +43,7 @@ public class Gesture implements View.OnTouchListener {
 	}
 	
 	public boolean onTouch(View v, MotionEvent event) {
-		//flag = true;
+		
 		
 	    switch(event.getAction()){
 	        case MotionEvent.ACTION_DOWN: {
@@ -83,7 +83,7 @@ public class Gesture implements View.OnTouchListener {
 	            return true;
 	        }
 	    }
-	    //flag = false;
+	    
 	    return false;
 	}
 

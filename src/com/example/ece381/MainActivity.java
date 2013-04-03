@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.renderscript.ProgramVertexFixedFunction.Constants;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -85,12 +84,13 @@ public class MainActivity extends Activity implements SwipeInterface{
 	// Goto Player page
 	/////
 	public void nextPage(View view) {
-		Intent myIntent = new Intent(view.getContext(), VoiceRecognitionActivity.class);  
+		Intent myIntent = new Intent(view.getContext(), TwitterActivity.class);  
 		startActivity(myIntent);
 	}
 	
 	// left swipe implementation
 	///////////////TO-DO************************
+	
 	@Override
 	public void RightToLeft(View v) {
 	    switch(v.getId()){
@@ -112,7 +112,10 @@ public class MainActivity extends Activity implements SwipeInterface{
 	    		break;
 	    }       
 	}
+	
 
+	
+	
 	//@Override
 	public void LeftToRight(View v) {
 		switch(v.getId()){
@@ -135,7 +138,7 @@ public class MainActivity extends Activity implements SwipeInterface{
 		}       
 		
 	}
-
+	
 
 	@Override
 	public void BottomToTop(View view) {
