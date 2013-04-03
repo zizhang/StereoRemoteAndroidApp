@@ -4,16 +4,21 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class SongList extends MainActivity { 
 	List<Song> songs;
 	MyApplication app;
+	EditText inputSearch;
 	
 	/** Called when the activity is first created. */  
 	@Override  
@@ -24,12 +29,12 @@ public class SongList extends MainActivity {
 	      //sendMessage();
 	      
 	      ListView listView = (ListView) findViewById(R.id.songList);
+	      inputSearch = (EditText) findViewById(R.id.inputSearch);
 	      
 	      app = (MyApplication) getApplication();
 	      
 	      songs = (app.getPlayList()).get(app.getPlayListPos()).getPlaylist();
-	      
-	      
+	        
 	      ArrayAdapter<Song> adapter = new ArrayAdapter<Song>(this,R.layout.songitems, songs);
 	      listView.setAdapter(adapter);
 	      
@@ -52,6 +57,34 @@ public class SongList extends MainActivity {
 			Gesture activitySwipeDetector = new Gesture(this);
 			LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.songListView);
 			lowestLayout.setOnTouchListener(activitySwipeDetector);
+			
+			
+			///////****************
+			///////TO-DO FIX!!!!!!
+			inputSearch.addTextChangedListener(new TextWatcher() {
+				
+				
+			    @Override
+			    public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+			        // When user changed the Text
+			         // SongList.this.songs.getFilter().filter(cs);
+			    	
+			    }
+			    
+			 
+			    @Override
+			    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+			            int arg3) {
+			        // TODO Auto-generated method stub
+			 
+			    }
+			 
+			    @Override
+			    public void afterTextChanged(Editable arg0) {
+			        // TODO Auto-generated method stub
+			    }
+			});
+			
 	}  
 	
 	private boolean pauseHasRun = false;

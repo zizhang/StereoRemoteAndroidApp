@@ -7,7 +7,6 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="15" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -23,6 +22,23 @@
         </activity>
         <activity android:name=".Player"></activity> 
         <activity android:name=".SongList"></activity> 
-        <activity android:name=".PlaylistActivity"></activity> 
+        <activity android:name=".PlaylistActivity"></activity>
+        <activity android:name=".TwitterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="oauth"
+                      android:host="t4jsample"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".VoiceRecognitionActivity"> </activity>
     </application>
+    
+    <!-- Permission - Internet Connect -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- Network State Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
 </manifest>

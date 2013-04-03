@@ -22,6 +22,11 @@ public class MyApplication extends Application {
 	Integer currentVolume;
 	private String readBuffer;
 	
+	/**
+	 * String for voice commands
+	 */
+	private String voiceCmd;
+	
 	public MyApplication() {
 		songList = new ArrayList<Song>();
 		playlists = new ArrayList<Playlist>(); 
@@ -139,4 +144,18 @@ public class MyApplication extends Application {
 	public boolean getSwipeFlag() {
 		return swipeFlag;
 	}
+	
+	
+	
+	/**
+	 * methods for voiceCmd global class variable
+	 **/
+	public String getVoiceCmd() {
+		return voiceCmd;
+	}
+	
+	public void setVoiceCmd(String cmd) {
+		voiceCmd = cmd;
+	}
+	 
 }

@@ -11,5 +11,5 @@ public interface SwipeInterface {
     public void BottomToTop(View view);
 
     public void TopToBottom(View view);
-	
+
 }

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,9 +13,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.renderscript.ProgramVertexFixedFunction.Constants;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,10 +83,10 @@ public class MainActivity extends Activity implements SwipeInterface{
 	}
 	
 	// Goto Player page
-	
+	/////
 	public void nextPage(View view) {
-		Intent myIntent = new Intent(view.getContext(), Player.class);  
-		startActivityForResult(myIntent, 0);
+		Intent myIntent = new Intent(view.getContext(), VoiceRecognitionActivity.class);  
+		startActivity(myIntent);
 	}
 	
 	// left swipe implementation
@@ -376,5 +380,6 @@ public class MainActivity extends Activity implements SwipeInterface{
 		Intent myIntent0 = new Intent(getBaseContext(), Player.class);  
 		startActivity(myIntent0);
 	}
+	
 }
 	
