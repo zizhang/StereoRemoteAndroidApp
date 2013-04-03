@@ -177,7 +177,7 @@ public class CreatePlaylistActivity extends MainActivity {
 		{
 			/* Initialize the application's main interface from the 'main.xml' layout xml file.
 	         * Add the initialized View to the viewSwitcher.*/
-			viewSwitcher.addView(ViewSwitcher.inflate(Player.this, R.layout.player, null));
+			viewSwitcher.addView(ViewSwitcher.inflate(CreatePlaylistActivity.this, R.layout.player, null));
 			//Switch the Views
 			viewSwitcher.showNext();
 		}
