@@ -25,6 +25,10 @@ public class MyApplication extends Application {
 	private boolean syncing;
 	private Integer balance;
 	private boolean syncNewPlaylist;
+	/**
+	 * String for voice commands
+	 */
+	private String voiceCmd;
 	
 	public MyApplication() {
 		songList = new ArrayList<Song>();
@@ -213,5 +217,16 @@ public class MyApplication extends Application {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * methods for voiceCmd global class variable
+	 **/
+	public String getVoiceCmd() {
+		return voiceCmd;
+	}
+	
+	public void setVoiceCmd(String cmd) {
+		voiceCmd = cmd;
 	}
 }

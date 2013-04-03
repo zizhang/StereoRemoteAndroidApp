@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -38,6 +39,11 @@ public class MainActivity extends Activity {
 		et = (EditText) findViewById(R.id.error_message_box);
 		et.setKeyListener(null);
 
+		//Gesture implementation for swiping 
+		Gesture activitySwipeDetector = new Gesture(this);
+		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.mainView);
+		lowestLayout.setOnTouchListener(activitySwipeDetector);
+		
 		// Set up a timer task.  We will use the timer to check the
 		// input queue every 500 ms
 		
@@ -78,7 +84,7 @@ public class MainActivity extends Activity {
 	// Goto Player page
 	
 	public void nextPage(View view) {
-		Intent myIntent = new Intent(view.getContext(), Player.class);  
+		Intent myIntent = new Intent(view.getContext(), TwitterActivity.class);  
 		startActivityForResult(myIntent, 0);
 	}
 
@@ -287,6 +293,12 @@ public class MainActivity extends Activity {
 						
 						byte buf[] = new byte[bytes_avail];
 						in.read(buf);
+						
+						for(int i = 0; i < buf.length; i++) {
+							if(buf[i] == 0) {
+								Log.d("ERROR", "Found null character");
+							}
+						}
 					
 						final String s = new String(buf, 0, bytes_avail, "US-ASCII");
 					
@@ -362,5 +374,16 @@ public class MainActivity extends Activity {
 		
 		
 		}
+	}
+	
+	public void LeftToRight() {
+		Intent myIntent0 = new Intent(getBaseContext(), PlaylistActivity.class);  
+		startActivity(myIntent0);
+	}
+
+
+	public void RightToLeft() {
+		Intent myIntent0 = new Intent(getBaseContext(), Player.class);  
+		startActivity(myIntent0);
 	}
 }

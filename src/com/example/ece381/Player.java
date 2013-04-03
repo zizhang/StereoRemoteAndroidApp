@@ -1,15 +1,15 @@
 package com.example.ece381;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
-import android.widget.ViewSwitcher;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 public class Player extends MainActivity implements OnSeekBarChangeListener {  
 	SeekBar seekBar; // Volume Bar
@@ -88,8 +88,13 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 				app.setBalance(progress);
 			}
 		});
+	      
+	    //Gesture implementation for swiping 
+		Gesture activitySwipeDetector = new Gesture(this);
+		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playerView);
+		lowestLayout.setOnTouchListener(activitySwipeDetector);
 	}  
-	
+	/*
 	private boolean pauseHasRun = false;
 	//On pause for android activity lifecycle
 	@Override
@@ -110,7 +115,7 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	        resumeHasRun = true;
 	        return;
 		}
-	}
+	}*/
 	
 	/// Methods for SeekBar(Volume) bar need otherwise results in error
 

@@ -25,5 +25,18 @@
         <activity android:name=".SongList"></activity> 
         <activity android:name=".PlaylistActivity"></activity> 
         <activity android:name=".CreatePlaylistActivity"></activity> 
+        <activity android:name=".TwitterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="oauth"
+                      android:host="t4jsample"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".VoiceRecognitionActivity"> </activity>
     </application>
+    
+    <!-- Network State Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

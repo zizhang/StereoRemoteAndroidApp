@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 public class PlaylistActivity extends MainActivity {
 	List<Playlist> playlists;
@@ -44,6 +45,11 @@ public class PlaylistActivity extends MainActivity {
 				Intent myIntent = new Intent(view.getContext(), SongList.class);  
 				startActivityForResult(myIntent, 0);
 			}});
+	      
+	    //Gesture implementation for swiping 
+		Gesture activitySwipeDetector = new Gesture(this);
+		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playListView);
+		lowestLayout.setOnTouchListener(activitySwipeDetector);
 	}  
 	
 	private boolean pauseHasRun = false;
