@@ -17,7 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.Filter;
+=======
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,8 +43,12 @@ public class MainActivity extends Activity implements SwipeInterface{
 		et.setKeyListener(null);
 		et = (EditText) findViewById(R.id.error_message_box);
 		et.setKeyListener(null);
+<<<<<<< HEAD
 		
 		
+=======
+
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 		//Gesture implementation for swiping 
 		Gesture activitySwipeDetector = new Gesture(this);
 		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.mainView);
@@ -51,7 +58,7 @@ public class MainActivity extends Activity implements SwipeInterface{
 		// input queue every 500 ms
 		TCPReadTimerTask tcp_task = new TCPReadTimerTask();
 		Timer tcp_timer = new Timer();
-		tcp_timer.schedule(tcp_task, 3000, 1000);
+		tcp_timer.schedule(tcp_task, 3000, 500);
 	}
 
 
@@ -79,12 +86,16 @@ public class MainActivity extends Activity implements SwipeInterface{
 		// and executes the code in it.
 		
 		new SocketConnect().execute((Void) null);
+		
+		Intent myIntent = new Intent(view.getContext(), Player.class);  
+		startActivity(myIntent);
 	}
 	
 	// Goto Player page
 	/////
 	public void nextPage(View view) {
 		Intent myIntent = new Intent(view.getContext(), TwitterActivity.class);  
+<<<<<<< HEAD
 		startActivity(myIntent);
 	}
 	
@@ -151,12 +162,15 @@ public class MainActivity extends Activity implements SwipeInterface{
 	public void TopToBottom(View view) {
 		// TODO Auto-generated method stub
 		
+=======
+		startActivityForResult(myIntent, 0);
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 	}
 
 
 	//  Called when the user wants to send a message
 	
-	public void sendMessage(View view) {
+	public synchronized void sendMessage(View view) {
 		MyApplication app = (MyApplication) getApplication();
 		//GlobalStore gs = new GlobalStore();
 		//GlobalStore gs = (GlobalStore) getApplication();
@@ -199,16 +213,18 @@ public class MainActivity extends Activity implements SwipeInterface{
 		
 	}
 	
+<<<<<<< HEAD
 	
 	//OVERLOADED! the current one we use
+=======
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 	public void sendMessage() {
 		MyApplication app = (MyApplication) getApplication();
 		//GlobalStore gs = new GlobalStore();
 		//GlobalStore gs = (GlobalStore) getApplication();
 		
 		// Get the message from the box
-		String msg;
-		
+		String msg = "";
 		
 		if(app.getCommand().equals("1")) { // Send play command 
 			if(app.getSongSelectedFlag()) {
@@ -217,13 +233,31 @@ public class MainActivity extends Activity implements SwipeInterface{
 			} else {
 				msg = app.getCommand();
 			}
+		} else if(app.getCommand().equals("6")) {
+			msg = "" + app.getCommand() + (app.getBalance()).toString();
 		} else if(app.getCommand().equals("5")) { // Send volume change command
 			msg = "" + app.getCommand() + (app.getVolume()).toString();
-		} else {
+		} else if(app.getCommand().equals("sync")) { // Send sync to get playlists
+			msg = "8";
+			app.setSyncStatus(true);
+			app.clearPlaylists();
+			app.setCommand(null);
+		} else if(app.getCommand().equals("confirm")) {
+			msg = "confirm";
+			app.setCommand("");
+		} else if(app.getCommand() == null) {
+			return;
+		}else {
 			msg = "" + app.getCommand();
 		}
 		
+<<<<<<< HEAD
 		EditText et = (EditText) findViewById(R.id.MessageText);
+=======
+		app.setCommand("");
+		
+		//EditText et = (EditText) findViewById(R.id.MessageText);
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 		//String msg = et.getText().toString();
 
 		// Create an array of bytes.  First byte will be the
@@ -332,6 +366,10 @@ public class MainActivity extends Activity implements SwipeInterface{
 	
 	public class TCPReadTimerTask extends TimerTask {
 		public void run() {
+<<<<<<< HEAD
+=======
+			
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 			MyApplication app = (MyApplication) getApplication();
 			if (app.sock != null && app.sock.isConnected()
 					&& !app.sock.isClosed()) {
@@ -347,9 +385,67 @@ public class MainActivity extends Activity implements SwipeInterface{
 						
 						byte buf[] = new byte[bytes_avail];
 						in.read(buf);
+<<<<<<< HEAD
 
 						final String s = new String(buf, 0, bytes_avail, "US-ASCII");
 		
+=======
+						
+						for(int i = 0; i < buf.length; i++) {
+							if(buf[i] == 0) {
+								Log.d("ERROR", "Found null character");
+							}
+						}
+					
+						final String s = new String(buf, 0, bytes_avail, "US-ASCII");
+					
+						//Log.d("Msg Received:", s);
+						
+						String msgReceived = s.substring(1);
+						
+						Log.d("Msg Received:", msgReceived);
+						
+						// ------ Sync Playlists --- //
+						String[] delimStrings;
+						
+						if(app.getSyncStatus()) {
+							if(msgReceived.contains(".LST")) { // DE2 Sends playlist name
+								app.setTempPlaylist(msgReceived);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("/")) {
+								delimStrings = msgReceived.split("/");
+								
+								Song newSong = new Song(delimStrings[0], delimStrings[1], delimStrings[2]);
+								
+								app.addTempSong(newSong);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("pdone")) {
+								app.addTempPlaylist();
+								app.setTempPlaylist(null);
+								app.setCommand("confirm");
+								sendMessage();
+							} else if(msgReceived.contains("syncdone")) {
+								app.setSyncStatus(false);
+							}
+						}
+						
+						// ----------------------------//
+						
+						// ----- Sync Currently Playing --- //
+						if(msgReceived.startsWith("1")) {
+							int pos = app.findSong(msgReceived.substring(1));
+							if(pos != -1) {
+								app.setPos(pos);
+							}
+						}
+						
+						// -------------------------------- //
+					
+						// We don't need to update the GUI with bytes received
+						
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 						// As explained in the tutorials, the GUI can not be
 						// updated in an asyncrhonous task.  So, update the GUI
 						// using the UI thread.
@@ -372,7 +468,11 @@ public class MainActivity extends Activity implements SwipeInterface{
 			
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 	public void LeftToRight() {
 		Intent myIntent0 = new Intent(getBaseContext(), PlaylistActivity.class);  
 		startActivity(myIntent0);
@@ -383,6 +483,9 @@ public class MainActivity extends Activity implements SwipeInterface{
 		Intent myIntent0 = new Intent(getBaseContext(), Player.class);  
 		startActivity(myIntent0);
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 }
 	

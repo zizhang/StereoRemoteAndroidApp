@@ -1,16 +1,23 @@
 package com.example.ece381;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+<<<<<<< HEAD
+=======
+import android.widget.ProgressBar;
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 public class Player extends MainActivity implements OnSeekBarChangeListener {  
 	SeekBar seekBar; // Volume Bar
 	TextView txt1; //txt2
+	private ViewSwitcher viewSwitcher;
 	
 	/** Called when the activity is first created. */  
 	@Override  
@@ -55,13 +62,50 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		});
 	      
+<<<<<<< HEAD
 	    //Gesture implementation for swiping 
 			Gesture activitySwipeDetector = new Gesture(this);
 			LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playerView);
 			lowestLayout.setOnTouchListener(activitySwipeDetector);
 			
+=======
+	      seekBar = (SeekBar) findViewById(R.id.balancer);
+	      seekBar.setMax(10);
+	      seekBar.setProgress(5);
+	      seekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+			
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				//txt1.setText("Stopped");
+				MyApplication app = (MyApplication) getApplication();
+				app.setCommand("6");
+				sendMessage();
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				//txt1.setText("Started");
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+							//Cool feature! makes the text bar change with the volume level
+							//txt1.setTextSize(progress);	
+				MyApplication app = (MyApplication) getApplication();
+				app.setBalance(progress);
+			}
+		});
+	      
+	    //Gesture implementation for swiping 
+		Gesture activitySwipeDetector = new Gesture(this);
+		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playerView);
+		lowestLayout.setOnTouchListener(activitySwipeDetector);
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 	}  
-	
+	/*
 	private boolean pauseHasRun = false;
 	//On pause for android activity lifecycle
 	@Override
@@ -82,7 +126,7 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	        resumeHasRun = true;
 	        return;
 		}
-	}
+	}*/
 	
 	/// Methods for SeekBar(Volume) bar need otherwise results in error
 
@@ -106,7 +150,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	
 	public void prevPage(View view) {	
 		Intent myIntent = new Intent(view.getContext(), MainActivity.class);  
+<<<<<<< HEAD
 		startActivityForResult(myIntent, 0);
+=======
+		startActivity(myIntent);
+>>>>>>> 0e6d17f75b994796b147814dcea5cad96416389f
 	}
 	
 	public void nextPage(View view) {	
@@ -133,8 +181,113 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 		case R.id.shuffle_button:
 			app.setCommand("7");
 			break;
+		case R.id.sync_button:
+			app.setCommand("sync");
+			sendMessage();
+			setContentView(R.layout.loadingscreen);
+            new LoadViewTask().execute();
+			return;
 		}
 		
 		sendMessage();
 	}
+	
+	//To use the AsyncTask, it must be subclassed
+    private class LoadViewTask extends AsyncTask<Void, Integer, Void>
+    {
+    	//A TextView object and a ProgressBar object
+    	private TextView tv_progress;
+    	private ProgressBar pb_progressBar;
+
+    	//Before running code in the separate thread
+		@Override
+		protected void onPreExecute()
+		{
+			//Initialize the ViewSwitcher object
+	        viewSwitcher = new ViewSwitcher(Player.this);
+	        /* Initialize the loading screen with data from the 'loadingscreen.xml' layout xml file.
+	         * Add the initialized View to the viewSwitcher.*/
+			viewSwitcher.addView(ViewSwitcher.inflate(Player.this, R.layout.loadingscreen, null));
+
+			//Initialize the TextView and ProgressBar instances - IMPORTANT: call findViewById() from viewSwitcher.
+			pb_progressBar = (ProgressBar) viewSwitcher.findViewById(R.id.progressBar1);
+			//Sets the maximum value of the progress bar to 100
+			pb_progressBar.setMax(100);
+
+			//Set ViewSwitcher instance as the current View.
+			setContentView(viewSwitcher);
+		}
+
+		//The code to be executed in a background thread.
+		@Override
+		protected Void doInBackground(Void... params)
+		{
+			/* This is just a code that delays the thread execution 4 times,
+			 * during 850 milliseconds and updates the current progress. This
+			 * is where the code that is going to be executed on a background
+			 * thread must be placed.
+			 */
+			
+			//Get the current thread's token
+			synchronized (this)
+			{
+				MyApplication app = (MyApplication) getApplication();
+				while(app.getSyncStatus());
+				/*
+				//Initialize an integer (that will act as a counter) to zero
+				int counter = 0;
+				//While the counter is smaller than four
+				while(counter <= 4)
+				{
+					//Wait 850 milliseconds
+					this.wait(850);
+					//Increment the counter
+					counter++;
+					//Set the current progress.
+					//This value is going to be passed to the onProgressUpdate() method.
+					publishProgress(counter*25);
+				}
+				*/
+			}
+			return null;
+		}
+
+		/*
+		//Update the TextView and the progress at progress bar
+		@Override
+		protected void onProgressUpdate(Integer... values)
+		{
+			
+		}
+		*/
+
+		//After executing the code in the thread
+		@Override
+		protected void onPostExecute(Void result)
+		{
+			/* Initialize the application's main interface from the 'main.xml' layout xml file.
+	         * Add the initialized View to the viewSwitcher.*/
+			viewSwitcher.addView(ViewSwitcher.inflate(Player.this, R.layout.player, null));
+			//Switch the Views
+			viewSwitcher.showNext();
+		}
+    }
+
+    //Override the default back key behavior
+    @Override
+    public void onBackPressed()
+    {
+    	//Emulate the progressDialog.setCancelable(false) behavior
+    	//If the first view is being shown
+    	if(viewSwitcher.getDisplayedChild() == 0)
+    	{
+    		super.onBackPressed();
+    		return;
+    	}
+    	else
+    	{
+    		//Finishes the current Activity
+    		super.onBackPressed();
+    	}
+    }
 } 

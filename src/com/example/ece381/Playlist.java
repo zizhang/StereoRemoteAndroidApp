@@ -7,6 +7,11 @@ public class Playlist {
 	private String name;
 	private List<Song> songList;
 	
+	public Playlist() {
+		name = "";
+		songList = new ArrayList<Song>();
+	}
+	
 	public Playlist(String tName) {
 		name = tName;
 		songList = new ArrayList<Song>();
