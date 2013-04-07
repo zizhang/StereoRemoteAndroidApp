@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">Nios2App</string>
+    <string name="label_ip">IP:</string>
+    <string name="playsong">Play Song</string>
+    <string name="label_port">Port:</string>
+    <string name="printsong">Print Song on Debug</string>
+    <string name="connect">Connect</string>
+    <string name="clear">Clear</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="label_myip">My IP:</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
+    <string name="sync">Sync</string>
+    <string name="volumelevelDisplay">Volume level</string>
+    <string name="current">Currently Playing</string>
+    <string name="refresh_socket">Show Sock.</string>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#0000FF</color>
+    <string name="forward_button">Forward</string>
+    <string name="back_button">Back</string>
+    <string name="songlist_heading">Songs</string>
+    <string name="playlist_heading">Playlists</string>
+    <string name="create_playlist_name">New Playlist Name</string>
+    <string name="create_playlist">Create Playlist</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="send_playlist">Send Playlist</string>
+    <string name="back_twitter">Back</string>
+	<string name="btSpeak">Speak</string>
+    <string name="tvTextMatches">Text Matches</string>
+    <string name="sNoOfMatches">No of Matches</string>
+    <string name="etSearchHint">Speech hint here</string>
+    <string-array name="saNoOfMatches">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+        <string name="back_voiceActivity">Back</string>
+        <string name="back_equalizer">Back</string>
+        <string name="settingstext">Settings</string>
+        <string name="trebletext">Treble</string>
+        <string name="midtext">Mid</string>
+        <string name="basstext">Bass</string>
+        <string name="balancetext">Balance</string>
+        <string name="fadetext">Fade</string>
+        <string name="currentlyplayingtext"></string>
+</resources>

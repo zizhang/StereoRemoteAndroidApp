@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black" >
+
+    <ImageButton
+        android:id="@+id/drum4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/drum3"
+        android:layout_below="@+id/drum3"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum1_0" />
+
+    <ImageButton
+        android:id="@+id/drum3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/drum2"
+        android:layout_below="@+id/drum2"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum1_0" />
+
+    <ImageButton
+        android:id="@+id/drum2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/drum1"
+        android:layout_below="@+id/drum1"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum1_0" />
+
+    <ImageButton
+        android:id="@+id/drum8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/drum3"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/drum4"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum2_0" />
+
+    <ImageButton
+        android:id="@+id/drum7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/drum8"
+        android:layout_alignLeft="@+id/drum8"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum2_0" />
+
+    <ImageButton
+        android:id="@+id/drum5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/drum6"
+        android:layout_alignLeft="@+id/drum7"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum2_0" />
+
+    <ImageButton
+        android:id="@+id/drum6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/drum7"
+        android:layout_alignLeft="@+id/drum7"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum2_0" />
+
+    <ImageButton
+        android:id="@+id/drum1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:src="@drawable/drum1_0" />
+
+    <ImageButton
+        android:id="@+id/homeFdrums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:src="@drawable/home_0" />
+
+</RelativeLayout>

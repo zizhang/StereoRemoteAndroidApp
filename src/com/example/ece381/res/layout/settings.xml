@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical" >
+
+<SeekBar
+    android:id="@+id/treble"
+    android:layout_width="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="168dp"
+    android:progressDrawable="@drawable/progresseq" />
+
+<SeekBar
+    android:id="@+id/bass"
+    android:layout_width="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="69dp"
+    android:progressDrawable="@drawable/progresseq" />
+
+<SeekBar
+    android:id="@+id/mid"
+    android:layout_width="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/bass"
+    android:layout_marginTop="20dp"
+    android:progressDrawable="@drawable/progresseq" />
+
+<TextView
+    android:id="@+id/textView2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/bass"
+    android:text="@string/midtext"
+    android:textColor="@color/white" />
+
+<TextView
+    android:id="@+id/textView3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/mid"
+    android:text="@string/trebletext"
+    android:textColor="@color/white" />
+
+<TextView
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBottom="@+id/bass"
+    android:layout_alignParentLeft="true"
+    android:layout_marginBottom="31dp"
+    android:text="@string/basstext"
+    android:textColor="@color/white" />
+
+<TextView
+    android:id="@+id/textView4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:text="@string/settingstext"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="@color/white"
+    android:textSize="50sp" />
+
+<SeekBar
+    android:id="@+id/balance"
+    android:layout_width="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/treble"
+    android:layout_marginTop="59dp"
+    android:progressDrawable="@drawable/progresseq" />
+
+<TextView
+    android:id="@+id/textView5"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_centerVertical="true"
+    android:text="@string/balancetext"
+    android:textColor="@color/white" />
+
+<TextView
+    android:id="@+id/textView6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBottom="@+id/fade"
+    android:layout_alignParentLeft="true"
+    android:layout_marginBottom="26dp"
+    android:text="@string/fadetext"
+    android:textColor="@color/white" />
+
+<ImageButton
+    android:id="@+id/home"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@null"
+    android:src="@drawable/home_0" />
+
+<SeekBar
+    android:id="@+id/fade"
+    android:layout_width="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/balance"
+    android:layout_marginTop="56dp"
+    android:progressDrawable="@drawable/progresseq" />
+
+</RelativeLayout>
