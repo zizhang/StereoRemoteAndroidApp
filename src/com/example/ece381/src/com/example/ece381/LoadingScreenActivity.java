@@ -35,16 +35,13 @@ public class LoadingScreenActivity extends MainActivity
 		{
 			//Initialize the ViewSwitcher object
 	        viewSwitcher = new ViewSwitcher(LoadingScreenActivity.this);
-	        /* Initialize the loading screen with data from the 'loadingscreen.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
+	        
 			viewSwitcher.addView(ViewSwitcher.inflate(LoadingScreenActivity.this, R.layout.loadingscreen, null));
 
-			//Initialize the TextView and ProgressBar instances - IMPORTANT: call findViewById() from viewSwitcher.
 			pb_progressBar = (ProgressBar) viewSwitcher.findViewById(R.id.progressBar1);
-			//Sets the maximum value of the progress bar to 100
+			
 			pb_progressBar.setMax(100);
 
-			//Set ViewSwitcher instance as the current View.
 			setContentView(viewSwitcher);
 		}
 
@@ -52,53 +49,24 @@ public class LoadingScreenActivity extends MainActivity
 		@Override
 		protected Void doInBackground(Void... params)
 		{
-			/* This is just a code that delays the thread execution 4 times,
-			 * during 850 milliseconds and updates the current progress. This
-			 * is where the code that is going to be executed on a background
-			 * thread must be placed.
-			 */
-			
 			//Get the current thread's token
 			synchronized (this)
 			{
 				MyApplication app = (MyApplication) getApplication();
 				while(app.getSyncStatus());
-				/*
-				//Initialize an integer (that will act as a counter) to zero
-				int counter = 0;
-				//While the counter is smaller than four
-				while(counter <= 4)
-				{
-					//Wait 850 milliseconds
-					this.wait(850);
-					//Increment the counter
-					counter++;
-					//Set the current progress.
-					//This value is going to be passed to the onProgressUpdate() method.
-					publishProgress(counter*25);
-				}
-				*/
+
 			}
 			return null;
 		}
 
-		/*
-		//Update the TextView and the progress at progress bar
-		@Override
-		protected void onProgressUpdate(Integer... values)
-		{
-			
-		}
-		*/
 
 		//After executing the code in the thread
 		@Override
 		protected void onPostExecute(Void result)
 		{
-			/* Initialize the application's main interface from the 'main.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
+			
 			viewSwitcher.addView(ViewSwitcher.inflate(LoadingScreenActivity.this, R.layout.player, null));
-			//Switch the Views
+			
 			viewSwitcher.showNext();
 		}
     }

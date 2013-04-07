@@ -8,6 +8,9 @@ public class ConnectionDetector {
  
     private Context _context;
  
+    /**
+     * Initializing
+     * **/
     public ConnectionDetector(Context context){
         this._context = context;
     }
@@ -16,7 +19,8 @@ public class ConnectionDetector {
      * Checking for all possible internet providers
      * **/
     public boolean isConnectingToInternet(){
-        ConnectivityManager connectivity = (ConnectivityManager) _context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivity = (ConnectivityManager) _context
+        		.getSystemService(Context.CONNECTIVITY_SERVICE);
           if (connectivity != null)
           {
               NetworkInfo[] info = connectivity.getAllNetworkInfo();

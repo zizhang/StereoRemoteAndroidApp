@@ -5,21 +5,23 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * Class for making getures 
+ */
 public class Gesture implements View.OnTouchListener {
 
 	static final String logTag = "ActivitySwipeDetector";
 	private Activity activity;
 	static final int MIN_DISTANCE = 100;
 	private float downX, downY, upX, upY;
-    //boolean flag;
-	
+   
 	public Gesture(){}
 	
 	public Gesture(Activity activity){
 	    this.activity = activity;
 	}
 	
-	// fix later
+	
 	public void onRightToLeftSwipeM(){
 	    Log.i(logTag, "RightToLeftSwipe!");
 	    //((MainActivity)activity).RightToLeft();
@@ -34,16 +36,17 @@ public class Gesture implements View.OnTouchListener {
 	
 	public void onTopToBottomSwipe(){
 	    Log.i(logTag, "onTopToBottomSwipe!");
-	    //activity.doSomething();
+	    
 	}
 	
 	public void onBottomToTopSwipe(){
 	    Log.i(logTag, "onBottomToTopSwipe!");
-	    //activity.doSomething();
 	}
 	
+	/**
+  	 * Function to check for a swipe on touch
+	 */
 	public boolean onTouch(View v, MotionEvent event) {
-		//flag = true;
 		
 	    switch(event.getAction()){
 	        case MotionEvent.ACTION_DOWN: {
@@ -83,7 +86,7 @@ public class Gesture implements View.OnTouchListener {
 	            return true;
 	        }
 	    }
-	    //flag = false;
+
 	    return false;
 	}
 

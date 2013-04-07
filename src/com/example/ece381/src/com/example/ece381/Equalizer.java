@@ -12,7 +12,9 @@ public class Equalizer extends MainActivity implements OnSeekBarChangeListener {
 	SeekBar bass;
 	SeekBar treble;
 	
-	
+	/**
+  	 * First activity used for the equalizer
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -66,6 +68,9 @@ public class Equalizer extends MainActivity implements OnSeekBarChangeListener {
 	}
 
 
+	/**
+  	 * Methods added for implementing the OnSeekBarChangeListner
+	 */
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
@@ -92,6 +97,9 @@ public class Equalizer extends MainActivity implements OnSeekBarChangeListener {
 		// Do nothing
 	}
 	
+	/**
+  	 * To go back to the main activity
+	 */
 	public void prevPage(View view) {	
 		Intent myIntent = new Intent(view.getContext(), MainActivity.class);  
 		startActivity(myIntent);

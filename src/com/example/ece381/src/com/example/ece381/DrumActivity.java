@@ -51,15 +51,16 @@ public class DrumActivity extends MainActivity {
      
 	      homeFdrums = (ImageButton) findViewById(R.id.homeFdrums);
 	      homeFdrums.setOnTouchListener(homeListener);
-	      
-	      
-	    
+	   	    
 }
 	
-    View.OnTouchListener homeListener = new View.OnTouchListener() {
+	/**
+   	 * Custon Drum button implementation
+	 */
+	View.OnTouchListener homeListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			// TODO Auto-generated method stub
+			
 	        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	        	homeFdrums.setImageResource(R.drawable.home_1);
 	        }
@@ -72,12 +73,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum1Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum1.setImageResource(R.drawable.drum1_1);
 		        	app.setLock(true);
@@ -93,12 +98,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum2Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum2.setImageResource(R.drawable.drum1_1);
 		        	app.setLock(true);
@@ -114,12 +123,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum3Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum3.setImageResource(R.drawable.drum1_1);
 		        	app.setLock(true);
@@ -135,12 +148,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum4Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum4.setImageResource(R.drawable.drum1_1);
 		        	app.setLock(true);
@@ -156,12 +173,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum5Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum5.setImageResource(R.drawable.drum2_1);
 		        	app.setLock(true);
@@ -177,12 +198,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum6Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum6.setImageResource(R.drawable.drum2_1);
 		        	app.setLock(true);
@@ -198,12 +223,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum7Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum7.setImageResource(R.drawable.drum2_1);
 		        	app.setLock(true);
@@ -219,12 +248,16 @@ public class DrumActivity extends MainActivity {
 		}
 	};
 	
+	/**
+   	 * Custon Drum button implementation
+   	 * with a boolean lock for not having it execute
+   	 * simultaneously when the user presses two buttons at once
+	 */
     View.OnTouchListener drum8Listener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 	    	MyApplication app = (MyApplication) getApplication();
 	    	if (!app.getLock()) {
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum8.setImageResource(R.drawable.drum2_1);
 		        	app.setLock(true);
