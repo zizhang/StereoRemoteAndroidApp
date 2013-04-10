@@ -39,8 +39,10 @@ public class TwitterActivity extends Activity {
 	 * Register your here app https://dev.twitter.com/apps/new and get your
 	 * consumer key and secret
 	 * */
-	static String TWITTER_CONSUMER_KEY = "f2D8xoyIR0g3SLvAf5Yqw"; // place your cosumer key here
-	static String TWITTER_CONSUMER_SECRET = "bcfe8Pxb9IFATimblA1OSnqIRSyxxqsQkHazY4tva4"; // place your consumer secret here
+	// consumer key
+	static String TWITTER_CONSUMER_KEY = "f2D8xoyIR0g3SLvAf5Yqw"; 
+	// consumer secret
+	static String TWITTER_CONSUMER_SECRET = "bcfe8Pxb9IFATimblA1OSnqIRSyxxqsQkHazY4tva4"; 
 
 	// Preference Constants
 	static String PREFERENCE_NAME = "twitter_oauth";
@@ -128,11 +130,14 @@ public class TwitterActivity extends Activity {
 		lblUpdate = (TextView) findViewById(R.id.lblUpdate);
 		lblUserName = (TextView) findViewById(R.id.lblUserName);
 
+		
+		
 		MyApplication app = (MyApplication) getApplication();
 		
 		String tweetMsg = "Currently playing " + app.getCurrentSong().getTitleName() + " by " + app.getCurrentSong().getArtistName();
 		
 		txtUpdate.setText(tweetMsg);
+		
 		
 		// Shared Preferences
 		mSharedPreferences = getApplicationContext().getSharedPreferences(

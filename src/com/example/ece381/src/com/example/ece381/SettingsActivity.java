@@ -208,6 +208,7 @@ public class SettingsActivity extends MainActivity {
 	    
 	}
 	
+	/** custom home button implementation. */  
     View.OnTouchListener homeListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {

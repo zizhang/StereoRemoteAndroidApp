@@ -1,5 +1,8 @@
 package com.example.ece381;
 
+/**
+ *  Song class for the Song objects
+ **/
 public class Song {
 
 	private String fileName;
@@ -8,7 +11,7 @@ public class Song {
 	
 	//constructor
 	public Song() {
-		// TODO Auto-generated constructor stub
+		
 		fileName = new String();
 		title = new String();
 		artist = new String();
@@ -17,9 +20,6 @@ public class Song {
 	
 	// constructor
 	public Song(String fileName, String title, String artist){
-		//fileName = fn;
-		//title = t;
-		//artist = a;
 		this.fileName = fileName;
 		this.title = title;
 		this.artist = artist;
@@ -55,7 +55,7 @@ public class Song {
 		return this.title;
 	}
 
-	
+	// to concatonate 
 	public String conCat(String fn, String t, String a) {
 		String fullName = new String();
 		fullName = "fileName" + "title" + "artist";

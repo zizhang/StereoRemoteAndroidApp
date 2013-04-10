@@ -22,12 +22,19 @@ public class Gesture implements View.OnTouchListener {
 	}
 	
 	
+	/**
+  	 * Implementation of left to right swipe
+  	 * can be used if all the indicated parts in different files are uncommented
+	 */
 	public void onRightToLeftSwipeM(){
 	    Log.i(logTag, "RightToLeftSwipe!");
-	    //((MainActivity)activity).RightToLeft();
+	   // ((MainActivity)activity).RightToLeft();
 	}
 	
-	
+	/**
+  	 * Implementation of right to left swipe
+  	 * can be used if all the indicated parts in different files are uncommented
+	 */
 	public void onLeftToRightSwipeM(){
 	    Log.i(logTag, "LeftToRightSwipe!");
 	     //((MainActivity)activity).LeftToRight();

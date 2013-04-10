@@ -33,18 +33,18 @@ public class PlaylistActivity extends MainActivity {
 		  ListView listView = (ListView) findViewById(R.id.playList);
 		  
 		  MyApplication app = (MyApplication) getApplication();
-		add = (ImageButton) findViewById(R.id.add);
-		add.setOnTouchListener(addListener);
+			add = (ImageButton) findViewById(R.id.add);
+			add.setOnTouchListener(addListener);
+				
+			sync = (ImageButton) findViewById(R.id.sync);
+			sync.setOnTouchListener(syncListener);	
 			
-		sync = (ImageButton) findViewById(R.id.sync);
-		sync.setOnTouchListener(syncListener);	
-		
-		homeFplaylist = (ImageButton) findViewById(R.id.homeFplaylist);
-		homeFplaylist.setOnTouchListener(homeListener);	
+			homeFplaylist = (ImageButton) findViewById(R.id.homeFplaylist);
+			homeFplaylist.setOnTouchListener(homeListener);	
 		
 		  playlists = app.getPlayList();
 	      
-	      
+	      //set the list with use of the array adapter
 	      ArrayAdapter<Playlist> adapter = new ArrayAdapter<Playlist>(this,R.layout.playlistitems, playlists);
 	      listView.setAdapter(adapter);
 	      
@@ -70,10 +70,10 @@ public class PlaylistActivity extends MainActivity {
 		lowestLayout.setOnTouchListener(activitySwipeDetector);
 		*/
 		
-		//setContentView(R.layout.loadingscreen);
-        //new LoadViewTask().execute();
+		
 	}  
 	
+	/** implementation of add button. */
     View.OnTouchListener addListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -90,6 +90,7 @@ public class PlaylistActivity extends MainActivity {
 		}
 	};
 	
+	/** implementation of home button. */
     View.OnTouchListener homeListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -106,6 +107,7 @@ public class PlaylistActivity extends MainActivity {
 		}
 	};
 	
+	/** implementation of sync button. */
     View.OnTouchListener syncListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -158,25 +160,26 @@ public class PlaylistActivity extends MainActivity {
 		startActivityForResult(myIntent, 0);
 	}
 	
-	//To use the AsyncTask, it must be subclassed
+	
+	/** Subclassed asynchronous task. */
     private class LoadViewTask extends AsyncTask<Void, Integer, Void>
     {
-    	//A TextView object and a ProgressBar object
+    	
     	private ProgressBar pb_progressBar;
 
     	//Before running code in the separate thread
 		@Override
 		protected void onPreExecute()
 		{
-			//Initialize the ViewSwitcher object
+			
 	        viewSwitcher = new ViewSwitcher(PlaylistActivity.this);
-	        /* Initialize the loading screen with data from the 'loadingscreen.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
+	       
+	        // loading screen
 			viewSwitcher.addView(ViewSwitcher.inflate(PlaylistActivity.this, R.layout.loadingscreen, null));
 
-			//Initialize the TextView and ProgressBar instances - IMPORTANT: call findViewById() from viewSwitcher.
+			
 			pb_progressBar = (ProgressBar) viewSwitcher.findViewById(R.id.progressBar1);
-			//Sets the maximum value of the progress bar to 100
+			
 			pb_progressBar.setMax(100);
 
 			//Set ViewSwitcher instance as the current View.
@@ -199,48 +202,16 @@ public class PlaylistActivity extends MainActivity {
 				MyApplication app = (MyApplication) getApplication();
 				while(app.getSyncStatus());
 				
-				//Initialize an integer (that will act as a counter) to zero
-				//int counter = 0;
-				//While the counter is smaller than four
-				/*while(counter <= 4)
-				{
-					//Wait 850 milliseconds
-					try {
-						this.wait(850);
-					} catch(Exception ex) {
-						return null;
-					}
-					
-					//Increment the counter
-					counter++;
-					//Set the current progress.
-					//This value is going to be passed to the onProgressUpdate() method.
-					publishProgress(counter*25);
-				}
-				*/
+				
 			}
 			return null;
 		}
 
-		/*
-		//Update the TextView and the progress at progress bar
-		@Override
-		protected void onProgressUpdate(Integer... values)
-		{
-			
-		}
-		*/
 
 		//After executing the code in the thread
 		@Override
 		protected void onPostExecute(Void result)
 		{
-			/* Initialize the application's main interface from the 'main.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
-			//viewSwitcher.addView(ViewSwitcher.inflate(PlaylistActivity.this, R.layout.play_list, null));
-			//Switch the Views
-			//viewSwitcher.showNext();
-			
 			Intent myIntent = new Intent(getBaseContext(), PlaylistActivity.class);  
 			startActivity(myIntent);
 		}

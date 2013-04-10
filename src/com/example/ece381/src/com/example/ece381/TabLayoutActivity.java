@@ -30,7 +30,7 @@ public class TabLayoutActivity extends TabActivity {
         
         TabSpec equalize = tabHost.newTabSpec("Equalizer");
         equalize.setIndicator("Equalize", getResources().getDrawable(R.drawable.connect_0));
-        Intent Intent2 = new Intent(this, Equalizer.class);
+        Intent Intent2 = new Intent(this, DrumActivity.class);
         equalize.setContent(Intent2);
         
         TabSpec twitter = tabHost.newTabSpec("Twitter");

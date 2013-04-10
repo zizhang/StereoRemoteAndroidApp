@@ -21,7 +21,6 @@ public class SongList extends MainActivity {
 	      super.onCreate(savedInstanceState);  
 	      setContentView(R.layout.song_list);  
 	      
-	      //sendMessage();
 	      
 	      ListView listView = (ListView) findViewById(R.id.songList);
 	      

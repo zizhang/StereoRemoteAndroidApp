@@ -45,7 +45,8 @@ public class MainActivity extends Activity {
 		et = (EditText) findViewById(R.id.error_message_box);
 		et.setKeyListener(null);
 
-		//Gesture implementation for swiping 
+		//Gesture implementation for swiping, not used for the final version
+		// can be used if uncommented
 		/*
 		Gesture activitySwipeDetector = new Gesture(this);
 		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.mainView);
@@ -60,6 +61,9 @@ public class MainActivity extends Activity {
 		tcp_timer.schedule(tcp_task, 3000, 500);
 	}
 	
+	/**
+  	 * Implementation of custom button
+	 */
     View.OnTouchListener homeListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -112,31 +116,18 @@ public class MainActivity extends Activity {
 		startActivityForResult(myIntent, 0);
 	}
 
-	//  Called when the user wants to send a message
-	
+	/**
+  	 * Called when the user wants to send a message
+	 */
 	public synchronized void sendMessage(View view) {
 		MyApplication app = (MyApplication) getApplication();
-		//GlobalStore gs = new GlobalStore();
-		//GlobalStore gs = (GlobalStore) getApplication();
 		
-		// Get the message from the box
-/*		String msg;
-		
-		if(app.getCommand().equals("1")) { // Send play command
-			msg = app.getCommand() + app.getFileName();
-		} else if(app.getCommand().equals("5")) { // Send volume change command
-			msg = "" + app.getCommand() + (app.getVolume()).toString();
-		} else {
-			msg = "" + app.getCommand();
-		}
-*/		
 		EditText et = (EditText) findViewById(R.id.MessageText);
 		String msg = et.getText().toString();
 
 		// Create an array of bytes.  First byte will be the
 		// message length, and the next ones will be the message
-		
-		
+	
 		byte buf[] = new byte[msg.length() + 1];
 		buf[0] = (byte) msg.length(); 
 		System.arraycopy(msg.getBytes(), 0, buf, 1, msg.length());
@@ -157,14 +148,19 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	/**
+  	 * Overloaded SendMessage function for use in other activites
+	 */
 	public void sendMessage() {
 		MyApplication app = (MyApplication) getApplication();
-		//GlobalStore gs = new GlobalStore();
-		//GlobalStore gs = (GlobalStore) getApplication();
 		
 		// Get the message from the box
 		String msg = "";
 		
+		
+		/**
+	  	 * To check all commands to be sent 
+		 */
 		if(app.getCommand().equals("1")) { // Send play command 
 			if(app.getSongSelectedFlag()) {
 				try {
@@ -190,7 +186,7 @@ public class MainActivity extends Activity {
 			app.setSyncStatus(true);
 			app.clearPlaylists();
 			app.setCommand(null);
-		} else if(app.getCommand().equals("confirm")) {
+		} else if(app.getCommand().equals("confirm")) { // gets confirmation back from DE2
 			msg = "confirm";
 			app.setCommand("");
 		} else if(app.getCommand() == null) {
@@ -203,8 +199,6 @@ public class MainActivity extends Activity {
 		
 		app.setCommand("");
 		
-		//EditText et = (EditText) findViewById(R.id.MessageText);
-		//String msg = et.getText().toString();
 
 		// Create an array of bytes.  First byte will be the
 		// message length, and the next ones will be the message
@@ -229,17 +223,15 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	/**
+  	 * SendMessage with a String parameter passed
+	 */
 	public void sendMessage(String msgSend) {
 		MyApplication app = (MyApplication) getApplication();
-		//GlobalStore gs = new GlobalStore();
-		//GlobalStore gs = (GlobalStore) getApplication();
 		
 		// Get the message from the box
 		String msg = msgSend;
 		
-		//EditText et = (EditText) findViewById(R.id.MessageText);
-		//String msg = et.getText().toString();
-
 		// Create an array of bytes.  First byte will be the
 		// message length, and the next ones will be the message
 		
@@ -263,6 +255,9 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	/**
+  	 * Functio for syncing the playlists
+	 */
 	public void syncNewPlaylist(Playlist newPlaylist) {
 		MyApplication app = (MyApplication) getApplication();
 		
@@ -392,6 +387,11 @@ public class MainActivity extends Activity {
 	public class TCPReadTimerTask extends TimerTask {
 		public void run() {
 			
+			/**
+		  	 * Implementation of Error checking 
+		  	 * on the handshaking between the android
+		  	 * and de2
+			 */
 			MyApplication app = (MyApplication) getApplication();
 			if (app.sock != null && app.sock.isConnected()
 					&& !app.sock.isClosed()) {
@@ -430,7 +430,6 @@ public class MainActivity extends Activity {
 					
 							final String s = new String(buf, 0, bytes_avail, "US-ASCII");
 						
-							//Log.d("Msg Received:", s);
 							
 							String msgReceived = s.substring(1);
 							
@@ -439,6 +438,9 @@ public class MainActivity extends Activity {
 							// ------ Sync Playlists --- //
 							String[] delimStrings;
 							
+							/**
+						  	 * Syncing songs
+							 */
 							if(app.getSyncStatus()) {
 								if(msgReceived.contains(".LST")) { // DE2 Sends playlist name
 									app.setTempPlaylist(msgReceived);
@@ -495,38 +497,6 @@ public class MainActivity extends Activity {
 									
 								}
 							}
-							
-							// ----------------------------//
-							
-							/*runOnUiThread(new Runnable() {
-								public void run() {
-									MyApplication app = (MyApplication) getApplication();
-									Player.currentlyPlaying.setText(app.getCurrentSong().getArtistName() + " - " + app.getCurrentSong().getTitleName());
-	
-								}
-							});*/
-							
-							// -------------------------------- //
-						
-							// We don't need to update the GUI with bytes received
-							
-							// As explained in the tutorials, the GUI can not be
-							// updated in an asyncrhonous task.  So, update the GUI
-							// using the UI thread.
-							/*
-							runOnUiThread(new Runnable() {
-								public void run() {
-									EditText et = (EditText) findViewById(R.id.RecvdMessage);
-									
-									et.setText(s); // Crashing the app for some reason
-	
-									TCPReadTimerTask tcp_task = new TCPReadTimerTask();
-									Timer tcp_timer = new Timer();
-									tcp_timer.schedule(tcp_task, 3000, 1000);
-									
-								}
-							});
-							*/
 						}
 					}
 				
@@ -540,10 +510,10 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	//To use the AsyncTask, it must be subclassed
+	//subclasses Asychronous task
     private class LoadViewTask extends AsyncTask<Void, Integer, Void>
     {
-    	//A TextView object and a ProgressBar object
+    	
     	private ProgressBar pb_progressBar;
 
     	//Before running code in the separate thread
@@ -552,16 +522,13 @@ public class MainActivity extends Activity {
 		{
 			//Initialize the ViewSwitcher object
 	        viewSwitcher = new ViewSwitcher(MainActivity.this);
-	        /* Initialize the loading screen with data from the 'loadingscreen.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
+	        
 			viewSwitcher.addView(ViewSwitcher.inflate(MainActivity.this, R.layout.loadingscreen, null));
 
-			//Initialize the TextView and ProgressBar instances - IMPORTANT: call findViewById() from viewSwitcher.
 			pb_progressBar = (ProgressBar) viewSwitcher.findViewById(R.id.progressBar1);
-			//Sets the maximum value of the progress bar to 100
+			
 			pb_progressBar.setMax(100);
 
-			//Set ViewSwitcher instance as the current View.
 			setContentView(viewSwitcher);
 		}
 
@@ -569,11 +536,6 @@ public class MainActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params)
 		{
-			/* This is just a code that delays the thread execution 4 times,
-			 * during 850 milliseconds and updates the current progress. This
-			 * is where the code that is going to be executed on a background
-			 * thread must be placed.
-			 */
 			
 			//Get the current thread's token
 			synchronized (this)
@@ -581,54 +543,21 @@ public class MainActivity extends Activity {
 				MyApplication app = (MyApplication) getApplication();
 				while(app.getSyncStatus());
 				
-				//Initialize an integer (that will act as a counter) to zero
-				//int counter = 0;
-				//While the counter is smaller than four
-				/*while(counter <= 4)
-				{
-					//Wait 850 milliseconds
-					try {
-						this.wait(850);
-					} catch(Exception ex) {
-						return null;
-					}
-					
-					//Increment the counter
-					counter++;
-					//Set the current progress.
-					//This value is going to be passed to the onProgressUpdate() method.
-					publishProgress(counter*25);
-				}
-				*/
 			}
 			return null;
 		}
-
-		/*
-		//Update the TextView and the progress at progress bar
-		@Override
-		protected void onProgressUpdate(Integer... values)
-		{
-			
-		}
-		*/
 
 		//After executing the code in the thread
 		@Override
 		protected void onPostExecute(Void result)
 		{
-			/* Initialize the application's main interface from the 'main.xml' layout xml file.
-	         * Add the initialized View to the viewSwitcher.*/
-			//viewSwitcher.addView(ViewSwitcher.inflate(PlaylistActivity.this, R.layout.play_list, null));
-			//Switch the Views
-			//viewSwitcher.showNext();
 			
 			Intent myIntent = new Intent(getBaseContext(), Player.class);  
 			startActivity(myIntent);
 		}
     }
 
-    //Override the default back key behavior
+    
     @Override
     public void onBackPressed()
     {
@@ -646,17 +575,20 @@ public class MainActivity extends Activity {
     	}
     }
 	
-	//Swipe commented out for now..
+	//Swipe Implementations commented out for final version
+    //can be used if uncommented
 	
+    /*
 	public void LeftToRight() {
 		Intent myIntent0 = new Intent(getBaseContext(), VoiceRecognitionActivity.class);  
 		startActivity(myIntent0);
 	}
 
-	/*
+	
 	public void RightToLeft() {
 		Intent myIntent0 = new Intent(getBaseContext(), PlaylistActivity.class);  
 		startActivity(myIntent0);
 	}
 	*/
+	
 }

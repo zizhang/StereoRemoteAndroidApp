@@ -43,6 +43,10 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	      final Handler h = new Handler();
 	      final Timer timer = new Timer();
 	      
+	      /**
+	    	 *Timer task for updating the currently playing song
+	    	 *on the player GUI.
+	  	 */
 	      TimerTask timerTask = new TimerTask() {
 	    	  @Override
 	    	  public void run() {
@@ -63,11 +67,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	    	  timer.schedule(timerTask, 3000, 1000);
 	      
 	      seekBar = (SeekBar) findViewById(R.id.player_volume);
-	      //txt1 = (TextView) findViewById(R.id.volume_level);
-	      int maxVolume = 10; //10
+	      
+	      int maxVolume = 10; 
 	      Integer currentVolume = app.getVolume();
 	      
-//button functions	      
+	      //button functions	      
 	      play2 = (ImageButton) findViewById(R.id.play2);
 	      play2.setOnTouchListener(playListener);
 	      
@@ -123,13 +127,13 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	    	  repeat.setImageResource(R.drawable.repeat_0);
 	      }
 	      
+	      //seek bar for volume control
 	      seekBar.setMax(maxVolume);
 	      seekBar.setProgress(currentVolume);
 	      seekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
 			
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				//txt1.setText("Stopped");
+			
 				MyApplication app = (MyApplication) getApplication();
 				app.setCommand("5");
 				sendMessage();
@@ -137,23 +141,19 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				//txt1.setText("Started");
+				
 			}
 			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				// TODO Auto-generated method stub
-							//Cool feature! makes the text bar change with the volume level
-							//txt1.setTextSize(progress);	
 				MyApplication app = (MyApplication) getApplication();
 				app.setVolume(progress);
 			}
 		});
 	      
 	      
-	    //Gesture implementation for swiping 
+	    //Gesture implementation for swiping , uncomment for swipes
 	     /*
 		Gesture activitySwipeDetector = new Gesture(this);
 		LinearLayout lowestLayout = (LinearLayout)this.findViewById(R.id.playerView);
@@ -161,7 +161,7 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 		*/
 	}
 
-		
+		// custom shuffle button implementation
 	   View.OnTouchListener shuffleListener = new View.OnTouchListener(){
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -183,6 +183,7 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 	    };
 	    
+	 // custom play button implementation
 	    View.OnTouchListener playListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -212,7 +213,8 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 				return false;
 			}
 		};
-
+		
+		// custom next button implementation
 	    View.OnTouchListener nextListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -220,12 +222,6 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	next1.setImageResource(R.drawable.next_1);
-//		        	try {
-//		        		getipAddress();
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 		        }
 		        else	{
 		        	next1.setImageResource(R.drawable.next_0);
@@ -236,14 +232,14 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom previous button implementation
 	    View.OnTouchListener prevListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
+				
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	prev1.setImageResource(R.drawable.prev_1);
-
 		        }
 		        else	{
 		        	prev1.setImageResource(R.drawable.prev_0);
@@ -254,11 +250,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom repeat button implementation
 	    View.OnTouchListener repeatListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN && !app.getRepeat()) {
 		        	repeat.setImageResource(R.drawable.repeat_2);
 		        	app.setRepeat(true);
@@ -275,17 +271,16 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom settings button implementation to go to settings page
 	    View.OnTouchListener settingsListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	settings.setImageResource(R.drawable.eq_1);
 		        }
 		        else	{
-		        	settings.setImageResource(R.drawable.eq_0);
-		        	//TODO change to playlist page		    		
+		        	settings.setImageResource(R.drawable.eq_0);	    		
 		        	Intent myIntent0 = new Intent(getBaseContext(), SettingsActivity.class);  
 		    		startActivity(myIntent0);		        
 		        }
@@ -293,10 +288,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom mute button implementation
 	    View.OnTouchListener muteListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub MUTE COMMAND
+				//method stub MUTE COMMAND
 	        	MyApplication app = (MyApplication) getApplication();
 		        if (event.getAction() == MotionEvent.ACTION_DOWN && !app.getMute()) {
 		        	mute.setImageResource(R.drawable.mute_1);
@@ -323,17 +319,17 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom drums button implementation to go to drums page
 	    View.OnTouchListener drumListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	drum.setImageResource(R.drawable.drum_1);
 		        }
 		        else	{
 		        	drum.setImageResource(R.drawable.drum_0);
-		        	//TODO change to SettingsActivity	    		
+		        	//change to SettingsActivity	    		
 		        	Intent myIntent0 = new Intent(getBaseContext(), DrumActivity.class);  
 		    		startActivity(myIntent0);		        
 		        }
@@ -341,11 +337,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom connect button implementation to go to connect page
 	    View.OnTouchListener connectListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	connect.setImageResource(R.drawable.connect_1);
 		        }
@@ -358,11 +354,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom list button implementation to go to Playlists page
 	    View.OnTouchListener listListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	list.setImageResource(R.drawable.list_1);
 		        }
@@ -375,11 +371,11 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom voice button implementation to go to Voice recognition page
 	    View.OnTouchListener voiceListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	voice.setImageResource(R.drawable.voice_1);
 		        }
@@ -392,16 +388,16 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 			}
 		};
 		
+		// custom twitter button implementation to go to twitter page
 	    View.OnTouchListener twitListener = new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				MyApplication app = (MyApplication) getApplication();
-				// TODO Auto-generated method stub
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	twit.setImageResource(R.drawable.twit_1);
 		        }
 		        else {
-		        	//TODO twitter page implement
+		        	// twitter page implement
 		        	twit.setImageResource(R.drawable.twit_0);
 		        	Intent myIntent0 = new Intent(getBaseContext(), TwitterActivity.class);  
 		    		startActivity(myIntent0);
@@ -409,8 +405,8 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 				return false;
 			}
 		};
-	/// Methods for SeekBar(Volume) bar need otherwise results in error
-
+	
+	/// Implemented methods for SeekBar bar 
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
 		// TODO Auto-generated method stub
@@ -439,35 +435,6 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 		startActivity(myIntent);
 	}
 	
-	/*
-	// Method for when any of the buttons are clicked
-	public void onClick(View view){
-		MyApplication app = (MyApplication) getApplication();
-		switch(view.getId()){
-		case R.id.play2:
-			break;
-		case R.id.next1:
-			break;
-		case R.id.prev1:
-			break;
-		case R.id.shuffle:
-			break;
-		case R.id.repeat:
-			break;
-		case R.id.mute:
-			break;
-		case R.id.sync_button:
-			app.setCommand("sync");
-			sendMessage();
-			setContentView(R.layout.loadingscreen);
-            new LoadViewTask().execute();
-			return;
-		}
-		
-//		sendMessage();
-	}
-	*/
-	
 	@Override
 	public void onBackPressed() {
 		//Do nothing
@@ -475,13 +442,13 @@ public class Player extends MainActivity implements OnSeekBarChangeListener {
 	
 	
 	
-	///**********
+	// For gestures//
 	public void LeftToRight() {
 		Intent myIntent0 = new Intent(getBaseContext(), MainActivity.class);  
 		startActivity(myIntent0);
 	}
 
-
+	// For gestures//
 	public void RightToLeft() {
 		Intent myIntent0 = new Intent(getBaseContext(), PlaylistActivity.class);  
 		startActivity(myIntent0);
