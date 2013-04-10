@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class VoiceRecognitionActivity extends MainActivity {
+	// request code
  private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
 	 private EditText metTextHint;

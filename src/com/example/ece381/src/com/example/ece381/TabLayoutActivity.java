@@ -7,14 +7,19 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
  
 public class TabLayoutActivity extends TabActivity {
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     *  Although TabActivity is deprecated, we used it 
+     *  for testing how a tab layout would look on our UI
+     **/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabs);
  
+        //getting the host
         TabHost tabHost = getTabHost();
  
+        // implementing new tabs
         
         TabSpec player = tabHost.newTabSpec("Player");
         player.setIndicator("Player", getResources().getDrawable(R.drawable.add_0));
@@ -44,9 +49,9 @@ public class TabLayoutActivity extends TabActivity {
         speak.setContent(Intent4);
  
         // Adding all TabSpec to TabHost
-        tabHost.addTab(player); // Adding photos tab
-        tabHost.addTab(playlist); // Adding songs tab
-        tabHost.addTab(equalize); // Adding videos tab
+        tabHost.addTab(player); 
+        tabHost.addTab(playlist); 
+        tabHost.addTab(equalize); 
         tabHost.addTab(twitter);
         tabHost.addTab(speak);
     }

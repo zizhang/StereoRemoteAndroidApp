@@ -31,14 +31,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * Twitter Activity
+ * we registered out App at https://dev.twitter.com/apps/new to get our
+ * consumer key and secret
+ * */
 @SuppressLint("NewApi")
 public class TwitterActivity extends Activity {
 	// Constants
 	ImageButton homeFtwit;
-	/**
-	 * Register your here app https://dev.twitter.com/apps/new and get your
-	 * consumer key and secret
-	 * */
+	
 	// consumer key
 	static String TWITTER_CONSUMER_KEY = "f2D8xoyIR0g3SLvAf5Yqw"; 
 	// consumer secret
@@ -57,15 +60,11 @@ public class TwitterActivity extends Activity {
 	static final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
 	static final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
 
-	// Login button
+	
 	Button btnLoginTwitter;
-	// Update status button
 	Button btnUpdateStatus;
-	// Logout button
 	Button btnLogoutTwitter;
-	// EditText for update
 	EditText txtUpdate;
-	// lbl update
 	TextView lblUpdate;
 	TextView lblUserName;
 
@@ -94,7 +93,8 @@ public class TwitterActivity extends Activity {
 		
 		homeFtwit = (ImageButton) findViewById(R.id.homeFtwit);
 	    homeFtwit.setOnTouchListener(homeFtwitListener);
-		///// for api > 2.3 otherwise it wont work//
+		
+	    ///// for api > 2.3 otherwise it will not run//
 		if (Build.VERSION.SDK_INT > 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
@@ -110,7 +110,7 @@ public class TwitterActivity extends Activity {
 			// Internet Connection is not present
 			alert.showAlertDialog(TwitterActivity.this, "Internet Connection Error",
 					"Please connect to working Internet connection", false);
-			// stop executing code by return
+		
 			return;
 		}
 		
@@ -118,11 +118,11 @@ public class TwitterActivity extends Activity {
 		if(TWITTER_CONSUMER_KEY.trim().length() == 0 || TWITTER_CONSUMER_SECRET.trim().length() == 0){
 			// Internet Connection is not present
 			alert.showAlertDialog(TwitterActivity.this, "Twitter oAuth tokens", "Please set your twitter oauth tokens first!", false);
-			// stop executing code by return
+			
 			return;
 		}
 
-		// All UI elements
+		
 		btnLoginTwitter = (Button) findViewById(R.id.btnLoginTwitter);
 		btnUpdateStatus = (Button) findViewById(R.id.btnUpdateStatus);
 		btnLogoutTwitter = (Button) findViewById(R.id.btnLogoutTwitter);
@@ -131,7 +131,7 @@ public class TwitterActivity extends Activity {
 		lblUserName = (TextView) findViewById(R.id.lblUserName);
 
 		
-		
+		// retrieving the currently playing song from the global class
 		MyApplication app = (MyApplication) getApplication();
 		
 		String tweetMsg = "Currently playing " + app.getCurrentSong().getTitleName() + " by " + app.getCurrentSong().getArtistName();
@@ -150,26 +150,24 @@ public class TwitterActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// Call login twitter function
 				loginToTwitter();
 			}
 		});
 
 		/**
 		 * Button click event to Update Status, will call updateTwitterStatus()
-		 * function
+		 * 
 		 * */
 		btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// Call update status function
-				// Get the status from EditText
+				
 				String status = txtUpdate.getText().toString();
 
 				// Check for blank text
 				if (status.trim().length() > 0) {
-					// update status
+					
 					new updateTwitterStatus().execute(status);
 					goBack();
 				} else {
@@ -188,7 +186,7 @@ public class TwitterActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// Call logout twitter function
+				
 				logoutFromTwitter();
 			}
 		});
@@ -217,23 +215,20 @@ public class TwitterActivity extends Activity {
 					e.putString(PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
 					e.putString(PREF_KEY_OAUTH_SECRET,
 							accessToken.getTokenSecret());
+					
 					// Store login status - true
 					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
 					e.commit(); // save changes
 
 					Log.e("Twitter OAuth Token", "> " + accessToken.getToken());
 
-					// Hide login button
 					btnLoginTwitter.setVisibility(View.VISIBLE);
-
-					// Show Update Twitter
 					lblUpdate.setVisibility(View.VISIBLE);
 					txtUpdate.setVisibility(View.VISIBLE);
 					btnUpdateStatus.setVisibility(View.VISIBLE);
 					btnLogoutTwitter.setVisibility(View.VISIBLE);
 					
 					// Getting user details from twitter
-					// For now i am getting his name only
 					long userID = accessToken.getUserId();
 					User user = twitter.showUser(userID);
 					String username = user.getName();
@@ -296,7 +291,7 @@ public class TwitterActivity extends Activity {
 	}
 
 	/**
-	 * Function to update status
+	 * To update status
 	 * */
 	class updateTwitterStatus extends AsyncTask<String, String, String> {
 
@@ -313,9 +308,6 @@ public class TwitterActivity extends Activity {
 			pDialog.show();
 		}
 
-		/**
-		 * getting Places JSON
-		 * */
 		protected String doInBackground(String... args) {
 			Log.d("Tweet Text", "> " + args[0]);
 			String status = args[0];
@@ -355,10 +347,7 @@ public class TwitterActivity extends Activity {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					//Toast.makeText(getApplicationContext(),"Status tweeted successfully", Toast.LENGTH_SHORT).show();
-					// Clearing EditText field
-					//*********
-					//txtUpdate.setText("");
+					// do nothing, we do not update the GUI.
 				}
 			});
 		}
@@ -367,7 +356,7 @@ public class TwitterActivity extends Activity {
 
 	/**
 	 * Function to logout from twitter
-	 * It will just clear the application shared preferences
+	 * It will clear the application shared preferences
 	 * */
 	private void logoutFromTwitter() {
 		// Clear the shared preferences
@@ -376,10 +365,8 @@ public class TwitterActivity extends Activity {
 		e.remove(PREF_KEY_OAUTH_SECRET);
 		e.remove(PREF_KEY_TWITTER_LOGIN);
 		e.commit();
-
-		// After this take the appropriate action
-		// I am showing the hiding/showing buttons again
-		// You might not needed this code
+		
+		// hide the buttons and fields
 		btnLogoutTwitter.setVisibility(View.GONE);
 		btnUpdateStatus.setVisibility(View.GONE);
 		txtUpdate.setVisibility(View.GONE);
@@ -403,10 +390,10 @@ public class TwitterActivity extends Activity {
 		super.onResume();
 	}
 	
+	/** Implementation of custon home button to go back to player**/
     View.OnTouchListener homeFtwitListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			// TODO Auto-generated method stub
 	        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	        	homeFtwit.setImageResource(R.drawable.home_1);
 	        }

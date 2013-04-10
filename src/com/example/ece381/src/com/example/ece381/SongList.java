@@ -38,8 +38,7 @@ public class SongList extends MainActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int pos,
 					long arg3) {
-				// TODO Auto-generated method stub
-				//ListIterator<Song> x = songs.listIterator();
+				
 				
 				app.setPos(pos);
 				app.setSongSelectedFlag(true);
