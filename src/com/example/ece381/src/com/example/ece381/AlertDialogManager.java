@@ -8,8 +8,7 @@ public class AlertDialogManager {
 	
 	/**
 	 * Function to display simple Alert Dialog
-
-	 * */
+	 **/
 	public void showAlertDialog(Context context, String title, String message,
 			Boolean status) {
 		AlertDialog alertDialog = new AlertDialog.Builder(context).create();

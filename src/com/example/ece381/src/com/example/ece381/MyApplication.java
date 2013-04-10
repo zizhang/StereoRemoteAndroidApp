@@ -56,7 +56,6 @@ public class MyApplication extends Application {
 		playListPosition = 0;
 		fileName = "";
 		currentListPosition = 0;
-		//fileName = songList.get(listPosition).getSongName();
 		
 		command = "1";
 		newSongSelected = false;
@@ -78,36 +77,6 @@ public class MyApplication extends Application {
 		play = false;
 		lock = false;
 		
-		/*
-		songList.add(new Song("SONG4.WAV", "Call Me Maybe", "Carly Rae Jepsen"));
-		songList.add(new Song("SONG5.WAV", "Unknown Title", "Unknown Artist"));
-		songList.add(new Song("SONG1.WAV", "Harlem Shake", "Miami Heat"));
-		songList.add(new Song("SONG3.WAV", "NHL Theme", "TSN"));
-		songList.add(new Song("SONG2.WAV", "PoH", "Kid Cudi"));
-		songList.add(new Song("SONG6.WAV", "Nyan Cat", "Unknown Artist"));
-		
-		playlistA = new Playlist("DEMO1.LST");
-		playlistB = new Playlist("DEMO2.LST");
-		allSongs = new Playlist("LIST.LST");
-		
-		allSongs.addSong(songList.get(0));
-		allSongs.addSong(songList.get(1));
-		allSongs.addSong(songList.get(2));
-		allSongs.addSong(songList.get(3));
-		allSongs.addSong(songList.get(4));
-		allSongs.addSong(songList.get(5));
-		
-		playlistA.addSong(songList.get(5));
-		playlistA.addSong(songList.get(0));
-		playlistA.addSong(songList.get(1));
-		
-		playlistB.addSong(songList.get(3));
-		playlistB.addSong(songList.get(2));
-		playlistB.addSong(songList.get(4));
-		
-		playlists.add(allSongs);
-		playlists.add(playlistA);
-		playlists.add(playlistB); */
 	}
 	
 	public Integer getVolume() {
